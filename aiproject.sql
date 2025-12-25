@@ -17,17 +17,4 @@ CREATE TABLE ai_responses (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Migration note: If you already have an existing `users` table, run the following
--- SQL to add the `device_mac` column and unique index safely:
--- ALTER TABLE users
---   ADD COLUMN device_mac VARCHAR(255) NULL,
---   ADD UNIQUE INDEX ux_device_mac (device_mac);
 
--- To add the `credits` column for existing databases and set default starting credits to 1000,
--- run the following SQL (this will backfill existing rows with 1000 credits):
--- ALTER TABLE users
---   ADD COLUMN credits INT NOT NULL DEFAULT 1000;
-
--- Alternatively, run the provided Python migration script at
--- `scripts\add_device_mac_migration.py` which will add the column only if
--- it does not already exist.

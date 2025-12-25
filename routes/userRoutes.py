@@ -13,6 +13,7 @@ def register():
 @user_routes.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json()
+    print(data)
     response, status = UserController.login_user(data)
     return jsonify(response), status
 

@@ -1,4 +1,4 @@
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 from models.userModel import User
 from utils.emailService import send_welcome_email
 import google.generativeai as genai
@@ -8,72 +8,67 @@ genai.configure(api_key="AIzaSyBxPute3C1p-hwSdGnmn6yzIj_dKlrfCgA")
 class UserController:
     @staticmethod
     def register_user(data):
-        if not all(key in data for key in ['username', 'password', 'email']):
+        if not all(key in data for key in ('username', 'password', 'email')):
             return {'error': 'Missing required fields'}, 400
 
-        if User.find_by_email(data['email']):
+        email = data['email'].strip().lower()
+
+        if User.find_by_email(email):
             return {'error': 'Email already exists'}, 400
 
-        # If device_mac provided, ensure device isn't already registered
         device_mac = data.get('device_mac')
-        if device_mac:
-            existing_device = User.find_by_mac(device_mac)
-            if existing_device:
-                return {'error': 'This device is already registered with another account'}, 400
+        if device_mac and User.find_by_mac(device_mac):
+            return {'error': 'This device is already registered'}, 400
+
+        password_hash = generate_password_hash(data['password'])
 
         user = User.save(
             username=data['username'],
-            password=data['password'],
-            email=data['email'],
+            password_hash=password_hash,   # ✅ HASH ONLY ONCE
+            email=email,
             device_mac=device_mac
         )
 
-        # Send welcome email
         try:
-            send_welcome_email(data['email'], data['username'])
+            send_welcome_email(email, data['username'])
         except Exception as e:
-            return {'error': f'User registered but failed to send welcome email: {str(e)}', 'user': user}, 202
+            return {
+                'message': 'User registered, email failed',
+                'error': str(e),
+                'user': user
+            }, 202
 
-        return {'message': 'User registered successfully and welcome email sent', 'user': user}, 202
-
+        return {'message': 'User registered successfully', 'user': user}, 201
     @staticmethod
     def login_user(data):
-        # Only check email for login
-        if not all(key in data for key in ['email', 'password']):
+        if not all(key in data for key in ('email', 'password')):
             return {'error': 'Missing required fields'}, 400
 
-        user = User.find_by_email(data['email'])
+        email = data['email'].strip().lower()
+        password = data['password']
 
+        user = User.find_by_email(email)
+        print(user)
         if not user:
             return {'error': 'User not found'}, 404
 
-        # Safely retrieve password hash from returned user record
-        password_hash = None
-        try:
-            # If user is a dict (DictCursor) this will work
-            password_hash = user.get('password_hash') if isinstance(user, dict) else None
-        except Exception:
-            password_hash = None
-
-        # Fallback to common alternative column name
-        if not password_hash and isinstance(user, dict):
-            password_hash = user.get('password') or user.get('pass_hash')
+        # EXPECTED schema: dict with password_hash
+        password_hash = user.get('password_hash')
 
         if not password_hash:
-            return {'error': 'Password hash not found for user'}, 500
+            return {'error': 'Password not set for this user'}, 500
 
-        if not check_password_hash(password_hash, data['password']):
-            return {'error': 'Invalid password'}, 401
+        if not check_password_hash(password_hash, password):
+            return {'error': 'Invalid email or password'}, 401
 
         return {
             'message': 'Login successful',
             'user': {
-                'id': user['id'],
-                'username': user['username'],
-                'email': user['email']
+                'id': user.get('id'),
+                'username': user.get('username'),
+                'email': user.get('email')
             }
         }, 200
-
     @staticmethod
     def process_ai(data, title, user_id):
         # Ensure user exists and has enough credits (cost: 500 credits per response)
