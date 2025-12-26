@@ -3,7 +3,7 @@ from models.userModel import User
 from utils.emailService import send_welcome_email
 import google.generativeai as genai
 from models.aiResponseModel import AIResponseModel
-genai.configure(api_key="AIzaSyBxPute3C1p-hwSdGnmn6yzIj_dKlrfCgA")   
+genai.configure(api_key="AIzaSyAFiDC5hW6O0JI3_BPtHr1ltepWMYs8Kxo")   
 
 class UserController:
     @staticmethod
@@ -86,7 +86,7 @@ class UserController:
             if credits < 500:
                 return {'error': 'Insufficient credits'}, 402
 
-            model = genai.GenerativeModel('gemini-2.0-flash')
+            model = genai.GenerativeModel('gemini-2.5-flash')
             prompt = (
                 "You are a professional website developer and designer. Based on the following user input, generate a complete, visually appealing, responsive personal portfolio website using only HTML with inline CSS. "
                 "The website must include sections such as: "
@@ -110,8 +110,8 @@ class UserController:
                 # Race condition: user no longer has enough credits
                 return {'error': 'Insufficient credits (race condition)'}, 409
 
-            AIResponseModel.save_ai_response(user_id, title, response.text)
-            return response.text, 200
+            portfolio_id = AIResponseModel.save_ai_response(user_id, title, response.text)
+            return {'portfolio_id': portfolio_id, 'message': 'Portfolio generated successfully'}, 200
         except Exception as e:
             print(f"Error during AI processing: {e}")
             return {"error": "Failed to get AI response"}, 500

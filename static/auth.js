@@ -108,9 +108,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (response.ok) {
                 const data = await response.json();
-                previewDiv.innerHTML = data;
-                editableDiv.innerHTML = data;
-                editBtn.style.display = 'inline-block';
+                if (data.portfolio_id) {
+                    // Redirect to the generated portfolio
+                    window.location.href = `/portfolio/${data.portfolio_id}`;
+                } else {
+                    previewDiv.innerHTML = '❌ Failed to get portfolio ID.';
+                    editBtn.style.display = 'none';
+                }
             } else {
                 previewDiv.innerHTML = '❌ Failed to generate portfolio.';
                 editBtn.style.display = 'none';

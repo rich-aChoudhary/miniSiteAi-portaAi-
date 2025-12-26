@@ -29,6 +29,12 @@ class AIResponseModel:
                     (user_id, title, data)
                 )
                 conn.commit()
+                portfolio_id = cursor.lastrowid if hasattr(cursor, 'lastrowid') and cursor.lastrowid else None
+                if not portfolio_id:
+                    cursor.execute("SELECT LAST_INSERT_ID() AS id")
+                    row = cursor.fetchone()
+                    portfolio_id = row['id'] if row and 'id' in row else None
+                return portfolio_id
         finally:
             conn.close()
     
