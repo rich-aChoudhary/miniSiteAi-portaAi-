@@ -136,7 +136,7 @@ async function loadUserData() {
     const res = await fetch(`/api/my-portfolios/${userData.id}`);
     const savedPortfolios = await res.json();
     console.log(savedPortfolios)
-    if (savedPortfolios) {
+    if (savedPortfolios.length >= 0) {
       dashboardState.portfolios = savedPortfolios;
       updatePortfolioList();
       updateDashboardStats();

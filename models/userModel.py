@@ -6,9 +6,6 @@ import config
 class User:
     @staticmethod
     def save(username, password=None, email=None, device_mac=None, password_hash=None):
-        # Accept either a raw `password` (which will be hashed here) or a
-        # pre-hashed `password_hash` provided by the caller. This keeps the
-        # API backward-compatible and avoids double-hashing.
         if password_hash:
             ph = password_hash
         elif password is not None:
