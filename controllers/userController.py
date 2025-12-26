@@ -66,7 +66,8 @@ class UserController:
             'user': {
                 'id': user.get('id'),
                 'username': user.get('username'),
-                'email': user.get('email')
+                'email': user.get('email'),
+                'credits': user.get('credits')
             }
         }, 200
     @staticmethod

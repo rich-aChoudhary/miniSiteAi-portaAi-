@@ -236,7 +236,7 @@ ul {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 30px;
+  padding: 10px 30px;
   background: white;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   position: sticky;
@@ -313,8 +313,8 @@ ul {
 }
 
 .user-avatar-small {
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   display: flex;
@@ -355,7 +355,7 @@ ul {
 
 /* Dashboard Section */
 .welcome-banner {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: #0f172a;
   border-radius: var(--border-radius);
   padding: 40px;
   color: white;
@@ -363,16 +363,11 @@ ul {
   box-shadow: var(--box-shadow);
 }
 
-.welcome-text h2 {
-  font-size: 2.2rem;
+.welcome-text h3 {
+  font-size: 1.5rem;
   margin-bottom: 10px;
 }
 
-.welcome-text p {
-  font-size: 1.1rem;
-  opacity: 0.9;
-  max-width: 600px;
-}
 
 .welcome-stats {
   display: flex;
@@ -1655,7 +1650,7 @@ ul {
 }
 
 .portfolio-table thead {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #0f172a;
 }
 
 .portfolio-table th {
@@ -1833,4 +1828,22 @@ ul {
     width: 100%;
     justify-content: center;
   }
+}
+.sidebar-socials {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.sidebar-socials i {
+  font-size: 18px;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.sidebar-socials i:hover {
+  color: #4f46e5;
+  transform: translateY(-2px);
 }

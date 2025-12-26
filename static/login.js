@@ -1,41 +1,22 @@
-// Professional Login Page Functionality
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('PortaAI Auth System initialized');
-    
-    // Initialize the authentication system
+    console.log('MiniSiteAI Auth System initialized');
     initAuthSystem();
- 
 });
 
-// Authentication System
 const authSystem = {
     currentForm: 'login',
     notificationTimeout: null
 };
 
-// Initialize Authentication System
 function initAuthSystem() {
-    // Set up form switching
     setupFormSwitching();
-    
-    // Set up form submissions
     setupFormSubmissions();
-    
-    // Set up password toggles
     setupPasswordToggles();
-    
-    // Set up password validation
     setupPasswordValidation();
-    
-
-    // Set up notification system
     setupNotifications();
-
 }
 
-// Set up Form Switching
 function setupFormSwitching() {
-    // Login to Signup
     const switchToSignupBtn = document.getElementById('switchToSignup');
     const switchToLoginFromSignup = document.getElementById('switchToLoginFromSignup');
     const switchToLogin = document.getElementById('switchToLogin');
@@ -169,6 +150,7 @@ async function handleLogin(event) {
         const data = await response.json().catch(() => ({}));
 
         if (response.ok) {
+            console.log(data.user)
             if (data.user) localStorage.setItem('user', JSON.stringify(data.user));
             showNotification('Login successful! Redirecting...', 'success');
             setTimeout(() => { window.location.href = '/dashboard'; }, 700);

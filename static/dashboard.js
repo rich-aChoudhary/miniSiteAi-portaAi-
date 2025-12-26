@@ -1,22 +1,12 @@
 // Dashboard Application
 document.addEventListener('DOMContentLoaded', function() {
-  // Initialize the dashboard
   initDashboard();
-  
-  // Check if user is logged in
   checkAuth();
-  
-  // Initialize all event listeners
   initEventListeners();
-  
-  // Load user data
   loadUserData();
-  
-  // Load dashboard data
   loadDashboardData();
 });
 
-// Dashboard State
 const dashboardState = {
   currentUser: null,
   portfolios: [],
@@ -76,9 +66,6 @@ const dashboardState = {
 
 // Initialize Dashboard
 function initDashboard() {
-  console.log('PortaAI Dashboard initialized');
-  
-  // Set current year in footer if exists
   const yearElement = document.getElementById('currentYear');
   if (yearElement) {
     yearElement.textContent = new Date().getFullYear();
@@ -115,7 +102,13 @@ function updateUserUI(user) {
   // Update user name
   const userNameElements = document.querySelectorAll('#userName, #userNameSmall, #welcomeUserName, #profileUserName');
   userNameElements.forEach(el => {
-    if (el) el.textContent = user.username || 'User';
+    if (el) 
+      
+      {
+        el.textContent = user.username || 'User';
+        // el.textContent = user.credits|| 0;
+
+      }
   });
   
   // Update user email
@@ -369,8 +362,8 @@ function initEventListeners() {
   const useTemplateBtn = document.getElementById('useTemplateBtn');
   if (useTemplateBtn) {
     useTemplateBtn.addEventListener('click', function() {
-      const templateName = document.getElementById('modalTemplateName').textContent;
-      alert(`Template "${templateName}" selected. Redirecting to portfolio creation...`);
+     
+      alert(`Feature is coming soon.`);
       
       // Close modal
       document.getElementById('templatePreviewModal').classList.add('hidden');
@@ -908,7 +901,7 @@ function generatePortfolio() {
         dashboardState.portfolios.unshift(newPortfolio);
         
         // Save to localStorage
-        localStorage.setItem('portaai_portfolios', JSON.stringify(dashboardState.portfolios));
+        localStorage.setItem('MiniSiteAI_portfolios', JSON.stringify(dashboardState.portfolios));
         
         // Update UI
         updatePortfolioList();
@@ -990,7 +983,7 @@ function handleProfileUpdate(e) {
   };
   
   // Save to storage (simulate API call)
-  localStorage.setItem('portaai_user', JSON.stringify(updatedUser));
+  localStorage.setItem('MiniSiteAI_user', JSON.stringify(updatedUser));
   dashboardState.currentUser = updatedUser;
   
   // Update UI
@@ -1003,8 +996,8 @@ function handleProfileUpdate(e) {
 function handleDeleteAccount() {
   if (confirm('Are you sure you want to delete your account? This will permanently delete all your data and cannot be undone.')) {
     // Simulate account deletion
-    localStorage.removeItem('portaai_user');
-    localStorage.removeItem('portaai_portfolios');
+    localStorage.removeItem('MiniSiteAI_user');
+    localStorage.removeItem('MiniSiteAI_portfolios');
     
     alert('Account deleted. Redirecting to home page...');
     
@@ -1103,9 +1096,8 @@ function previewTemplate(id) {
 function useTemplate(id) {
   const template = dashboardState.templates.find(t => t.id === id);
   if (template) {
-    alert(`Template "${template.name}" selected. Redirecting to portfolio creation...`);
-    
-    // Navigate to portfolio creation
+    alert(`Feature is coming soon.`);
+
     showSection('ai-portfolio');
     document.querySelector('.nav-item[data-section="ai-portfolio"]').click();
     

@@ -1,6 +1,6 @@
 // Professional Signup Landing Page Functionality
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('PortaAI Signup Landing initialized');
+    console.log('MiniSiteAI Signup Landing initialized');
     
     // Initialize the signup system
     initSignupSystem();
@@ -101,7 +101,7 @@ function handleSignup(e) {
     // Simulate API call
     setTimeout(() => {
         // Check if user already exists
-        const users = JSON.parse(localStorage.getItem('portaai_users')) || [];
+        const users = JSON.parse(localStorage.getItem('MiniSiteAI_users')) || [];
         const userExists = users.some(u => u.email === email);
         
         if (userExists) {
@@ -126,10 +126,10 @@ function handleSignup(e) {
         
         // Save to localStorage
         users.push(newUser);
-        localStorage.setItem('portaai_users', JSON.stringify(users));
+        localStorage.setItem('MiniSiteAI_users', JSON.stringify(users));
         
         // Also save to session for immediate login
-        sessionStorage.setItem('portaai_user', JSON.stringify({
+        sessionStorage.setItem('MiniSiteAI_user', JSON.stringify({
             id: newUser.id,
             name: newUser.name,
             email: newUser.email,
@@ -138,7 +138,7 @@ function handleSignup(e) {
         }));
         
         // Show success notification
-        showNotification('Account created successfully! Welcome to PortaAI', 'success');
+        showNotification('Account created successfully! Welcome to MiniSiteAI', 'success');
         
         // Reset button
         submitBtn.innerHTML = originalText;
@@ -483,7 +483,7 @@ function setupDemoData() {
         
         demoBtn.addEventListener('click', function() {
             document.getElementById('fullName').value = 'Demo User';
-            document.getElementById('email').value = 'demo@portaai.com';
+            document.getElementById('email').value = 'demo@MiniSiteAI.com';
             document.getElementById('password').value = 'Demo123!';
             document.getElementById('confirmPassword').value = 'Demo123!';
             document.getElementById('profession').value = 'Software Developer';

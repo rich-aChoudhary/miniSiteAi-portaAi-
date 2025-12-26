@@ -5,8 +5,16 @@ import config
 
 class User:
     @staticmethod
-    def save(username, password, email, device_mac=None):
-        password_hash = generate_password_hash(password)
+    def save(username, password=None, email=None, device_mac=None, password_hash=None):
+        # Accept either a raw `password` (which will be hashed here) or a
+        # pre-hashed `password_hash` provided by the caller. This keeps the
+        # API backward-compatible and avoids double-hashing.
+        if password_hash:
+            ph = password_hash
+        elif password is not None:
+            ph = generate_password_hash(password)
+        else:
+            ph = None
         conn = config.get_db_connection()
         try:
             with conn.cursor() as cursor:
@@ -46,11 +54,11 @@ class User:
 
                 # Build insert columns according to what's available now
                 insert_cols = ['username', 'password_hash', 'email']
-                values = [username, password_hash, email]
+                values = [username, ph, email]
                 # If an older schema uses a 'password' column (NOT NULL), ensure we populate it with the hashed password
                 if 'password' in existing_cols and 'password' not in insert_cols:
                     insert_cols.append('password')
-                    values.append(password_hash)
+                    values.append(ph)
                 if 'device_mac' in existing_cols:
                     insert_cols.append('device_mac')
                     values.append(device_mac)

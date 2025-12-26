@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PortaAI - Dashboard</title>
+  <title>MiniSiteAI - Dashboard</title>
   <link rel="stylesheet" href="/static/dashboard.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
       <div class="sidebar-header">
         <div class="logo">
           <i class="fas fa-robot"></i>
-          <span class="logo-text">Porta<span class="logo-highlight">AI</span></span>
+          <span class="logo-text">MiniSite<span class="logo-highlight">AI</span></span>
         </div>
         <button class="sidebar-toggle" id="sidebarToggle">
           <i class="fas fa-bars"></i>
@@ -41,12 +41,7 @@
               <span>Create Portfolio</span>
             </a>
           </li>
-          <!-- <li>
-            <a href="#profile" class="nav-item" data-section="profile">
-              <i class="fas fa-user-circle"></i>
-              <span>Profile</span>
-            </a>
-          </li> -->
+       
           <li>
             <a href="#templates" class="nav-item" data-section="templates">
               <i class="fas fa-palette"></i>
@@ -63,12 +58,30 @@
       </nav>
       
       <div class="sidebar-footer">
-        <button class="btn-logout" id="logoutBtn">
-          <i class="fas fa-sign-out-alt"></i>
-          <span>Logout</span>
-        </button>
-        <div class="app-version">v1.0.0</div>
-      </div>
+
+  <!-- Social Icons -->
+  <div class="sidebar-socials">
+    <i class="fab fa-linkedin"
+       title="LinkedIn"
+       onclick="window.open('https://www.linkedin.com/in/richa-kumari-6a3875299/', '_blank')"></i>
+
+    <i class="fab fa-instagram"
+       title="Instagram"
+       onclick="window.open('https://www.instagram.com/_rishuchoudhary/', '_blank')"></i>
+
+    <i class="fab fa-github"
+       title="GitHub"
+       onclick="window.open('https://github.com/rich-aChoudhary', '_blank')"></i>
+  </div>
+
+  <button class="btn-logout" id="logoutBtn">
+    <i class="fas fa-sign-out-alt"></i>
+    <span>Logout</span>
+  </button>
+
+  <div class="app-version">v1.0.0</div>
+</div>
+
     </aside>
 
     <!-- Main Content -->
@@ -77,16 +90,9 @@
       <header class="main-header">
         <div class="header-left">
           <h1 id="pageTitle">Dashboard</h1>
-          <div class="breadcrumb" id="breadcrumb">
-            <span>Home</span> / <span>Dashboard</span>
-          </div>
         </div>
         
         <div class="header-right">
-          <!-- <div class="notification-bell" id="notificationBell">
-            <i class="fas fa-bell"></i>
-            <span class="notification-count">3</span>
-          </div> -->
           <div class="header-user">
             <div class="user-avatar-small" id="userAvatarSmall">
               <i class="fas fa-user"></i>
@@ -105,7 +111,7 @@
         <section id="dashboard" class="content-section active">
           <div class="welcome-banner">
             <div class="welcome-text">
-              <h2>Welcome back, <span id="welcomeUserName">User</span>! 👋</h2>
+              <h3>Welcome back, <span id="welcomeUserName">User</span>! 👋</h3>
               <p>Here's your portfolio dashboard. Create, manage, and track your AI-generated portfolios.</p>
             </div>
             <div class="welcome-stats">
@@ -116,20 +122,7 @@
                   <p>Portfolios</p>
                 </div>
               </div>
-              <!-- <div class="stat-card">
-                <i class="fas fa-eye"></i>
-                <div>
-                  <h3 id="totalViews">0</h3>
-                  <p>Total Views</p>
-                </div>
-              </div>
-              <div class="stat-card">
-                <i class="fas fa-star"></i>
-                <div>
-                  <h3 id="completionRate">0%</h3>
-                  <p>Completion Rate</p>
-                </div>
-              </div> -->
+             
             </div>
           </div>
           
@@ -402,7 +395,7 @@
         <!-- Support Section -->
         <section id="support" class="content-section">
           <div class="section-header">
-            <h2 class="section-title">Get help and contact at : richakumari1022003@gmail.com</h2>
+            <h2 class="section-title">Get help and contact at : richakumari10022003@gmail.com</h2>
           </div>
           
         </section>
