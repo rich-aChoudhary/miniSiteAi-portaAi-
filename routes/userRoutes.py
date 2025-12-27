@@ -20,8 +20,6 @@ def login():
 @user_routes.route('/api/generate-portfolio', methods=['POST'])
 def generate_portfolio():
     req = request.get_json()
-    print(req)
-    # Use .get() to avoid KeyError if 'title' is missing
     response, status_code = UserController.process_ai(
         req.get('data'),
         req.get('title', ''),

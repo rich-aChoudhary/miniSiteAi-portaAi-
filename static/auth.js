@@ -75,6 +75,19 @@ document.addEventListener('DOMContentLoaded', function() {
         editorSection.style.display = 'none';
         editableDiv.innerHTML = '';
 
+        // Ensure loader element exists and show it
+        let loader = document.getElementById('ai-loader');
+        if (!loader) {
+            loader = document.createElement('div');
+            loader.id = 'ai-loader';
+            loader.className = 'loader-overlay';
+            const spinner = document.createElement('div');
+            spinner.className = 'spinner';
+            loader.appendChild(spinner);
+            document.body.appendChild(loader);
+        }
+        loader.style.display = 'flex';
+
         let finalDescription = descriptionInput;
 
         // 📄 Extract text from file if uploaded
@@ -106,8 +119,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
             });
 
+            // Always hide loader when we have a response
+            const data = await response.json();
+            loader.style.display = 'none';
             if (response.ok) {
-                const data = await response.json();
                 if (data.portfolio_id) {
                     // Redirect to the generated portfolio
                     window.location.href = `/portfolio/${data.portfolio_id}`;
@@ -121,6 +136,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } catch (err) {
             console.error(err);
+            // Hide loader on error
+            const loaderEl = document.getElementById('ai-loader');
+            if (loaderEl) loaderEl.style.display = 'none';
             previewDiv.innerHTML = '❌ Something went wrong.';
             editBtn.style.display = 'none';
         }

@@ -139,6 +139,19 @@ async function handleLogin(event) {
         return;
     }
 
+    // Show loader
+    let loader = document.getElementById('auth-loader');
+    if (!loader) {
+        loader = document.createElement('div');
+        loader.id = 'auth-loader';
+        loader.className = 'loader-overlay';
+        const spinner = document.createElement('div');
+        spinner.className = 'spinner';
+        loader.appendChild(spinner);
+        document.body.appendChild(loader);
+    }
+    loader.style.display = 'flex';
+
     try {
         // API call - replace endpoint if your backend uses a different route
         const response = await fetch('/api/login', {
@@ -155,10 +168,12 @@ async function handleLogin(event) {
             showNotification('Login successful! Redirecting...', 'success');
             setTimeout(() => { window.location.href = '/dashboard'; }, 700);
         } else {
+            loader.style.display = 'none';
             showNotification(data.message || 'Login failed. Please try again.', 'error');
         }
     } catch (error) {
         console.error('Login error:', error);
+        loader.style.display = 'none';
         showNotification('An error occurred. Please try again later.', 'error');
     }
 }
@@ -217,6 +232,19 @@ async function handleSignup(e) {
         submitBtn.disabled = true;
     }
 
+    // Show loader
+    let loader = document.getElementById('auth-loader');
+    if (!loader) {
+        loader = document.createElement('div');
+        loader.id = 'auth-loader';
+        loader.className = 'loader-overlay';
+        const spinner = document.createElement('div');
+        spinner.className = 'spinner';
+        loader.appendChild(spinner);
+        document.body.appendChild(loader);
+    }
+    loader.style.display = 'flex';
+
     try {
         const response = await fetch('/api/register', {
             method: 'POST',
@@ -249,6 +277,7 @@ async function handleSignup(e) {
             console.error('Register failed', response.status, respText, data);
             const serverMsg = data.message || respText || 'Registration failed. Please try again.';
             showNotification(serverMsg, 'error');
+            loader.style.display = 'none';
             if (submitBtn) {
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
@@ -257,6 +286,7 @@ async function handleSignup(e) {
     } catch (err) {
         console.error('Signup error:', err);
         showNotification('An error occurred. Please try again later.', 'error');
+        loader.style.display = 'none';
         if (submitBtn) {
             submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;

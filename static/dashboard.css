@@ -1847,3 +1847,26 @@ ul {
   color: #4f46e5;
   transform: translateY(-2px);
 }
+
+/* Loader overlay used during AI generation */
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.35);
+  z-index: 9999;
+}
+.loader-overlay .spinner {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 6px solid rgba(255,255,255,0.2);
+  border-top-color: #ffffff;
+  animation: spin 0.9s linear infinite;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
