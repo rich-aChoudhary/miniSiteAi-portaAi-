@@ -28,7 +28,6 @@ def dashboard():
 @app.route('/portfolio/<int:portfolio_id>')
 def view_portfolio(portfolio_id):
     portfolio = AIResponseModel.get_portfolio_by_id(portfolio_id)
-    print(portfolio)
     if not portfolio:
         return jsonify({'error': 'Portfolio not found'}), 404
     return portfolio['html_content']  # Directly return HTML content

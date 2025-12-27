@@ -42,7 +42,30 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+function handlePortfolioError(status, data) {
+    switch (status) {
+        case 402:
+            showToast('You do not have enough credits. Please recharge.', 'warning');
+            openCreditsModal(); // optional
+            break;
 
+        case 404:
+            showToast('User session expired. Please log in again.', 'error');
+            logoutUser();
+            break;
+
+        case 409:
+            showToast('Credits changed. Please try again.', 'info');
+            break;
+
+        case 500:
+            showToast('AI failed to generate portfolio. Try again later.', 'error');
+            break;
+
+        default:
+            showToast(data?.message || 'Something went wrong.', 'error');
+    }
+}
     // 7. Portfolio related elements
     const generatePortfolio = document.getElementById('generatePortfolio'); // Button to make portfolio
     const editBtn = document.getElementById('editPortfolioBtn'); // Edit button
@@ -107,34 +130,43 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const user = JSON.parse(localStorage.getItem('user') || '{}');
+const loaderEl = document.getElementById('ai-loader');
 
-        try {
-            const response = await fetch('/api/generate-portfolio', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    userId: user.id,
-                    title: title,
-                    data: finalDescription
-                })
-            });
+try {
+    loaderEl.style.display = 'flex';
 
-            // Always hide loader when we have a response
-            const data = await response.json();
-            loader.style.display = 'none';
-            if (response.ok) {
-                if (data.portfolio_id) {
-                    window.location.href = `/portfolio/${data.portfolio_id}`;
-                } else {
-                    alert('Failed to Portfolio ');
-                }
-            } else {
-               alert(data.message || 'Failed to generate portfolio.');
-            }
-        } catch (err) {
-            console.error(err);
-          alert('Error generating portfolio. Please try again.');
+    const response = await fetch('/api/generate-portfolio', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            userId: user.id,
+            title,
+            data: finalDescription
+        })
+    });
+
+    const result = await response.json();
+
+    loaderEl.style.display = 'none';
+
+    if (!response.ok) {
+        handlePortfolioError(response.status, result);
+        return;
+    }
+
+    // SUCCESS
+    if (result.portfolio_id) {
+        window.location.href = `/portfolio/${result.portfolio_id}`;
+    } else {
+         handlePortfolioError(500, "Network or server error");
         }
+
+} catch (error) {
+    loaderEl.style.display = 'none';
+    console.error(error);
+     handlePortfolioError(500, "Network or server error");
+}
+
     });
 }
 
@@ -163,6 +195,24 @@ document.addEventListener('DOMContentLoaded', function() {
         reader.onerror = reject;
         reader.readAsText(file);
     });
+}
+
+
+function showToast(message, type = 'info') {
+    // Example
+    Toastify({
+        text: message,
+        duration: 4000,
+        gravity: "top",
+        position: "right",
+        style: {
+            background: type === 'error'
+                ? "#ff4d4f"
+                : type === 'warning'
+                ? "#faad14"
+                : "#1890ff"
+        }
+    }).showToast();
 }
 
     // 9. When you click 'Edit', show the editor with your portfolio content

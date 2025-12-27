@@ -1,41 +1,20 @@
-// Professional Signup Landing Page Functionality
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('MiniSiteAI Signup Landing initialized');
-    
-    // Initialize the signup system
     initSignupSystem();
-    
-    // Initialize animations and interactions
+
     initAnimations();
 });
-
-// Signup System
 const signupSystem = {
     passwordStrength: 0,
     notificationTimeout: null
 };
 
-// Initialize Signup System
 function initSignupSystem() {
-    // Set up form submission
     setupFormSubmission();
-    
-    // Set up password strength checker
     setupPasswordStrength();
-    
-    // Set up password toggle
     setupPasswordToggle();
-    
-    // Set up social signup buttons
     setupSocialSignup();
-    
-    // Set up notification system
     setupNotifications();
-    
-    // Set up smooth scrolling for anchor links
     setupSmoothScrolling();
-    
-    // Set up demo video placeholder
     setupDemoVideo();
 }
 
@@ -127,8 +106,6 @@ function handleSignup(e) {
         // Save to localStorage
         users.push(newUser);
         localStorage.setItem('MiniSiteAI_users', JSON.stringify(users));
-        
-        // Also save to session for immediate login
         sessionStorage.setItem('MiniSiteAI_user', JSON.stringify({
             id: newUser.id,
             name: newUser.name,

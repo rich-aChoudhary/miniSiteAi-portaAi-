@@ -63,7 +63,22 @@ const dashboardState = {
     }
   ]
 };
-
+function showToast(message, type = 'info') {
+    // Example
+    Toastify({
+        text: message,
+        duration: 4000,
+        gravity: "top",
+        position: "right",
+        style: {
+            background: type === 'error'
+                ? "#ff4d4f"
+                : type === 'warning'
+                ? "#faad14"
+                : "#1890ff"
+        }
+    }).showToast();
+}
 // Initialize Dashboard
 function initDashboard() {
   const yearElement = document.getElementById('currentYear');
@@ -135,7 +150,6 @@ async function loadUserData() {
    const userData= await getUserFromStorage();
     const res = await fetch(`/api/my-portfolios/${userData.id}`);
     const savedPortfolios = await res.json();
-    console.log(savedPortfolios)
     if (savedPortfolios.length >= 0) {
       dashboardState.portfolios = savedPortfolios;
       updatePortfolioList();
@@ -363,7 +377,7 @@ function initEventListeners() {
   if (useTemplateBtn) {
     useTemplateBtn.addEventListener('click', function() {
      
-      alert(`Feature is coming soon.`);
+     showToast(`Feature is coming soon.`, 'info');
       
       // Close modal
       document.getElementById('templatePreviewModal').classList.add('hidden');
@@ -514,7 +528,7 @@ function handleQuickAction(action) {
       document.querySelector('.nav-item[data-section="templates"]').click();
       break;
     case 'view-analytics':
-      alert('Analytics feature coming soon!');
+      showToast('Analytics feature coming soon!', 'info');
       break;
     case 'get-support':
       showSection('support');
@@ -1096,7 +1110,7 @@ function previewTemplate(id) {
 function useTemplate(id) {
   const template = dashboardState.templates.find(t => t.id === id);
   if (template) {
-    alert(`Feature is coming soon.`);
+    showToast(`Feature is coming soon.`, 'info');
 
     showSection('ai-portfolio');
     document.querySelector('.nav-item[data-section="ai-portfolio"]').click();

@@ -13,7 +13,6 @@ def register():
 @user_routes.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json()
-    print(data)
     response, status = UserController.login_user(data)
     return jsonify(response), status
 
@@ -47,9 +46,7 @@ def get_portfolio(portfolio_id):
     return jsonify(portfolio['html_content'])
 @user_routes.route('/api/portfolio/<int:portfolio_id>', methods=['DELETE'])
 def delete_portfolio_route(portfolio_id):
-    print(f"DELETE /api/portfolio/{portfolio_id} called")
     response, status = UserController.delete_portfolio(portfolio_id)
-    print('Delete result:', response, 'status:', status)
     return jsonify(response), status
 @user_routes.route('/api/save-portfolio/<int:portfolio_id>', methods=['PUT'])
 def save_portfolio(portfolio_id):

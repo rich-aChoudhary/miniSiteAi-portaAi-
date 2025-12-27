@@ -190,7 +190,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Force show any hidden critical elements
     if (hiddenElements.length > 0) {
-      console.log('Found hidden elements, making them visible:', hiddenElements);
       hiddenElements.forEach(el => {
         if (el.tagName !== 'SCRIPT' && el.tagName !== 'STYLE' && el.tagName !== 'LINK') {
           el.style.display = 'block';

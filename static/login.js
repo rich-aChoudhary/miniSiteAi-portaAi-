@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('MiniSiteAI Auth System initialized');
     initAuthSystem();
 });
 
@@ -163,7 +162,7 @@ async function handleLogin(event) {
         const data = await response.json().catch(() => ({}));
 
         if (response.ok) {
-            console.log(data.user)
+          
             if (data.user) localStorage.setItem('user', JSON.stringify(data.user));
             showNotification('Login successful! Redirecting...', 'success');
             setTimeout(() => { window.location.href = '/dashboard'; }, 700);

@@ -3,7 +3,7 @@ from models.userModel import User
 from utils.emailService import send_welcome_email
 import google.generativeai as genai
 from models.aiResponseModel import AIResponseModel
-genai.configure(api_key=" YOUR_API_KEY")   
+genai.configure(api_key=" YOUR_API_KEY_HERE")   
 
 class UserController:
     @staticmethod
@@ -48,7 +48,6 @@ class UserController:
         password = data['password']
 
         user = User.find_by_email(email)
-        print(user)
         if not user:
             return {'error': 'User not found'}, 404
 
@@ -132,14 +131,11 @@ class UserController:
     def delete_portfolio(portfolio_id):
         # Ensure portfolio exists
         try:
-            print(f"Attempting to delete portfolio id={portfolio_id}")
             portfolio = AIResponseModel.get_portfolio_by_id(portfolio_id)
-            print('Found portfolio:', portfolio)
             if not portfolio:
                 return {'error': 'Portfolio not found'}, 404
 
             AIResponseModel.delete_portfolio(portfolio_id)
-            print(f"Portfolio {portfolio_id} deleted")
             return {'message': 'Portfolio deleted successfully'}, 200
         except Exception as e:
             print(f"Error deleting portfolio {portfolio_id}:", e)
