@@ -3,7 +3,7 @@ from models.userModel import User
 from utils.emailService import send_welcome_email
 import google.generativeai as genai
 from models.aiResponseModel import AIResponseModel
-genai.configure(api_key="AIzaSyAFiDC5hW6O0JI3_BPtHr1ltepWMYs8Kxo")   
+genai.configure(api_key=" YOUR_API_KEY")   
 
 class UserController:
     @staticmethod

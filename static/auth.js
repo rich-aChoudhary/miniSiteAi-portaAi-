@@ -124,23 +124,16 @@ document.addEventListener('DOMContentLoaded', function() {
             loader.style.display = 'none';
             if (response.ok) {
                 if (data.portfolio_id) {
-                    // Redirect to the generated portfolio
                     window.location.href = `/portfolio/${data.portfolio_id}`;
                 } else {
-                    previewDiv.innerHTML = '❌ Failed to get portfolio ID.';
-                    editBtn.style.display = 'none';
+                    alert('Failed to Portfolio ');
                 }
             } else {
-                previewDiv.innerHTML = '❌ Failed to generate portfolio.';
-                editBtn.style.display = 'none';
+               alert(data.message || 'Failed to generate portfolio.');
             }
         } catch (err) {
             console.error(err);
-            // Hide loader on error
-            const loaderEl = document.getElementById('ai-loader');
-            if (loaderEl) loaderEl.style.display = 'none';
-            previewDiv.innerHTML = '❌ Something went wrong.';
-            editBtn.style.display = 'none';
+          alert('Error generating portfolio. Please try again.');
         }
     });
 }
